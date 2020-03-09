@@ -16,7 +16,7 @@
                    alert('ssssss');
                     console.log('An error has occurred!', e)
                 };
-debugger;
+
                 // Put video listeners into place
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                     navigator.mediaDevices.getUserMedia(mediaConfig).then(function (stream) {
@@ -48,6 +48,7 @@ debugger;
                 }
 
             } catch (e) {
+                alert('33333');
                 console.log("error");
             }
 
