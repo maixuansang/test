@@ -23,7 +23,7 @@
                     navigator.mediaDevices.getUserMedia(mediaConfig).then(function (stream) {
                      
                         video.src = window.URL.createObjectURL(stream);
-                        
+                        document.getElementById("demo").innerHTML = "0033";
                         video.play();
                     }, errBack);
                 }
@@ -31,20 +31,20 @@
                     /* Legacy code below! */
                 else if (navigator.getUserMedia) { // Standard
                     navigator.getUserMedia(mediaConfig, function (stream) {
-                      
+                      document.getElementById("demo").innerHTML = "11113";
                         video.src = stream;
                         video.play();
                     }, errBack);
                 } else if (navigator.webkitGetUserMedia) { // WebKit-prefixed
                     navigator.webkitGetUserMedia(mediaConfig, function (stream) {
                         video.src = window.webkitURL.createObjectURL(stream);
-                   
+                   document.getElementById("demo").innerHTML = "3222";
                         video.play();
                     }, errBack);
                 } else if (navigator.mozGetUserMedia) { // Mozilla-prefixed
                     navigator.mozGetUserMedia(mediaConfig, function (stream) {
                         video.src = window.URL.createObjectURL(stream);
-                      
+                       document.getElementById("demo").innerHTML = "33333";
                         video.play();
                     }, errBack);
                 }
