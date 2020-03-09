@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <video id="video" style="width:100%" autoplay ></video>
+<script>
+    (function(){
+        var video = document.getElementById('video');
+        try {
+                var mediaConfig = { video: true };
+                var errBack = function (e) {
+                   
+                    console.log('An error has occurred!', e)
+                };
+
+                // Put video listeners into place
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia(mediaConfig).then(function (stream) {
+                        video.src = window.URL.createObjectURL(stream);
+                        video.play();
+                    }, errBack);
+                }
+
+                    /* Legacy code below! */
+                else if (navigator.getUserMedia) { // Standard
+                    navigator.getUserMedia(mediaConfig, function (stream) {
+                        video.src = stream;
+                        video.play();
+                    }, errBack);
+                } else if (navigator.webkitGetUserMedia) { // WebKit-prefixed
+                    navigator.webkitGetUserMedia(mediaConfig, function (stream) {
+                        video.src = window.webkitURL.createObjectURL(stream);
+                        video.play();
+                    }, errBack);
+                } else if (navigator.mozGetUserMedia) { // Mozilla-prefixed
+                    navigator.mozGetUserMedia(mediaConfig, function (stream) {
+                        video.src = window.URL.createObjectURL(stream);
+                        video.play();
+                    }, errBack);
+                }
+
+            } catch (e) {
+                console.log("error");
+            }
+
+    })();
+</script>
+
+
+</body>
+</html>
