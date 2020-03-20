@@ -57,12 +57,16 @@
                 
                 console.log("error");
             }
-
+ var reader = new FileReader();
     $('input[type="file"]').change(function (e) {
                if (this.files.length > 0) {
                   console.log(this.files[0]);
+                reader.readAsDataURL(this.files[0]);
                }
            });
+  reader.addEventListener("load", function (e) { // Setting up base64 URL on image
+    alert( reader.result);
+ };
 
     })();
 </script>
