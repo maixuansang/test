@@ -12,6 +12,20 @@
 <body>
 <a id="download">Download
 <button id="stop">Stop
+ <video id="player" controls></video>
+<script>
+  var player = document.getElementById('player');
+
+  var handleSuccess = function(stream) {
+    player.srcObject = stream;
+  };
+
+  navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+      .then(handleSuccess)
+    navigator.mediaDevices.enumerateDevices().then((devices) => {
+  devices = devices.filter((d) => d.kind === 'videoinput');
+});
+</script>    
 <script>
   let shouldStop = false;
   let stopped = false;
