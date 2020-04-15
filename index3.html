@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+<body>
+    <video id="video" style="width:100%; height: 300px;border: solid;" autoplay ></video>
+    <p id="demo"></p>
+    <input type="file" accept="image/*" capture="camera" />
+<script>
+    (function(){
+        var video = document.getElementById('video');
+        try {
+                var mediaConfig = { video: true };
+                var errBack = function (e) {
+                   alert('ssssss');
+                    console.log('An error has occurred!', e)
+                };
+
+                // Put video listeners into place
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia(mediaConfig).then(function (stream) {
+                     
+                        video.src = window.URL.createObjectURL(stream);
+                        document.getElementById("demo").innerHTML = "0033";
+                        video.play();
+                    }, errBack);
+                }
+
+                    /* Legacy code below! */
+                else if (navigator.getUserMedia) { // Standard
+                    navigator.getUserMedia(mediaConfig, function (stream) {
+                      document.getElementById("demo").innerHTML = "11113";
+                        video.src = stream;
+                        video.play();
+                    }, errBack);
+                } else if (navigator.webkitGetUserMedia) { // WebKit-prefixed
+                    navigator.webkitGetUserMedia(mediaConfig, function (stream) {
+                        video.src = window.webkitURL.createObjectURL(stream);
+                   document.getElementById("demo").innerHTML = "3222";
+                        video.play();
+                    }, errBack);
+                } else if (navigator.mozGetUserMedia) { // Mozilla-prefixed
+                    navigator.mozGetUserMedia(mediaConfig, function (stream) {
+                        video.src = window.URL.createObjectURL(stream);
+                       document.getElementById("demo").innerHTML = "33333";
+                        video.play();
+                    }, errBack);
+                }
+
+            } catch (e) {
+                document.getElementById("demo").innerHTML = err.message;
+                
+                console.log("error");
+            }
+ var reader = new FileReader();
+    $('input[type="file"]').change(function (e) {
+               if (this.files.length > 0) {
+                  console.log(this.files[0]);
+                reader.readAsDataURL(this.files[0]);
+               }
+           });
+  reader.addEventListener("load", function (e) { // Setting up base64 URL on image
+    alert( reader.result.slice(0,10));
+ });
+
+    })();
+</script>
+
+
+</body>
+</html>
