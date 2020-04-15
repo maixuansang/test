@@ -9,67 +9,29 @@
 
 </head>
 <body>
-    <video id="video" style="width:100%; height: 300px;border: solid;" autoplay ></video>
-    <p id="demo"></p>
-    <input type="file" accept="image/*" capture="camera" />
+<video id="player" controls autoplay></video>
+<button id="capture">Capture</button>
+<canvas id="canvas" width=320 height=240></canvas>
 <script>
-    (function(){
-        var video = document.getElementById('video');
-        try {
-                var mediaConfig = { video: true };
-                var errBack = function (e) {
-                   alert('ssssss');
-                    console.log('An error has occurred!', e)
-                };
+  const player = document.getElementById('player');
+  const canvas = document.getElementById('canvas');
+  const context = canvas.getContext('2d');
+  const captureButton = document.getElementById('capture');
 
-                // Put video listeners into place
-                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                    navigator.mediaDevices.getUserMedia(mediaConfig).then(function (stream) {
-                     
-                        video.src = window.URL.createObjectURL(stream);
-                        document.getElementById("demo").innerHTML = "0033";
-                        video.play();
-                    }, errBack);
-                }
+  const constraints = {
+    video: true,
+  };
 
-                    /* Legacy code below! */
-                else if (navigator.getUserMedia) { // Standard
-                    navigator.getUserMedia(mediaConfig, function (stream) {
-                      document.getElementById("demo").innerHTML = "11113";
-                        video.src = stream;
-                        video.play();
-                    }, errBack);
-                } else if (navigator.webkitGetUserMedia) { // WebKit-prefixed
-                    navigator.webkitGetUserMedia(mediaConfig, function (stream) {
-                        video.src = window.webkitURL.createObjectURL(stream);
-                   document.getElementById("demo").innerHTML = "3222";
-                        video.play();
-                    }, errBack);
-                } else if (navigator.mozGetUserMedia) { // Mozilla-prefixed
-                    navigator.mozGetUserMedia(mediaConfig, function (stream) {
-                        video.src = window.URL.createObjectURL(stream);
-                       document.getElementById("demo").innerHTML = "33333";
-                        video.play();
-                    }, errBack);
-                }
+  captureButton.addEventListener('click', () => {
+    // Draw the video frame to the canvas.
+    context.drawImage(player, 0, 0, canvas.width, canvas.height);
+  });
 
-            } catch (e) {
-                document.getElementById("demo").innerHTML = err.message;
-                
-                console.log("error");
-            }
- var reader = new FileReader();
-    $('input[type="file"]').change(function (e) {
-               if (this.files.length > 0) {
-                  console.log(this.files[0]);
-                reader.readAsDataURL(this.files[0]);
-               }
-           });
-  reader.addEventListener("load", function (e) { // Setting up base64 URL on image
-    alert( reader.result.slice(0,10));
- });
-
-    })();
+  // Attach the video stream to the video element and autoplay.
+  navigator.mediaDevices.getUserMedia(constraints)
+    .then((stream) => {
+      player.srcObject = stream;
+    });
 </script>
 
 
